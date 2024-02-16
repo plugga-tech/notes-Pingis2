@@ -5,14 +5,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <script src="script.js" type="module"></script>
-    <link rel="stylesheet" href="style.scss">
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <button id="loginBtn">logga in</button>
+    <nav class="menu">
+        <button id="loginBtn" class="loginBtn">logga in</button>
+    </nav>
+
+    <div id="documentList" class="documentList"></div>
 
     <section id="documentContainer" class="documentContainer">
 
-        <button onclick="createDocument()">Skapa dokument</button>
+        <button id="createDocumentBtn" class="createDocument">Skapa dokument</button>
 
     </section>
 </body>

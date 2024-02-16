@@ -4,7 +4,7 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 const mysql = require('mysql2');
 const cors = require('cors');
-const nodemon = require('nodemon');
+const connection = require("./lib/conn");
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
@@ -20,5 +20,22 @@ app.use(cors());
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+
+app.get("/documents", (req, res) => {
+
+    connection.connect((err) => {
+        if (err) console.log("err", err);
+
+        let query = "SELECT * FROM documents";
+
+        connection.query(query, (err, data) => {
+            if (err) console.log("err", err);
+
+            console.log("documents", data);
+            res.json(data);
+        })
+
+    })
+})
 
 module.exports = app;

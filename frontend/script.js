@@ -1,3 +1,5 @@
+import printDocuments from "./printDocuments.js";
+
 let loginBtn = document.getElementById('loginBtn');
 let isLoggedIn = true;
 
@@ -20,4 +22,4 @@ loginBtn.addEventListener('click', () => {
     toggleLoginState();    
 });
 
-
+printDocuments();

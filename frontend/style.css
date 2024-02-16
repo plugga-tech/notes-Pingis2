@@ -1,0 +1,42 @@
+body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0;
+}
+
+.menu {
+    width: 100%;
+    background-color: grey;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.loginBtn {
+    margin: 10px;
+}
+
+.documentList {
+    border: 2px black solid;
+    width: auto;
+    padding: 10px;
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    margin: 20px 0 20px 0;
+}
+
+.documentContainer{
+    width: 500px;
+    height: 500px;
+    background-color:gray;
+    position: relative;
+}
+
+.createDocument {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
