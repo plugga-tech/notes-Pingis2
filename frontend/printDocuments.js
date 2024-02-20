@@ -4,7 +4,6 @@ export default function printDocuments() {
     fetch("http://localhost:3000/documents")
     .then(res => res.json())
     .then(data => {
-        console.log("documents", data);
 
         documentList.innerHTML = "";
 
