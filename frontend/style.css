@@ -58,7 +58,8 @@ p {
     font-size: 2rem;
 }
 
-.hidden {
-    display: none;
+.textInput {
+    height: 500px;
+    width: 500px;
 }
 
