@@ -39,12 +39,47 @@ app.get("/documents", (req, res) => {
 })
 
 
-app.get('/new_document', (req, res) => {
+app.post('/documents', (req, res) => {
+
+    let documentName = req.body.docTitle;
+    let documentContent = req.body.textArea;
+    //let documentContent = req.body.docContent;
+
     connection.connect((err) => {
         if (err) console.log("err", err);
 
-        res.send("cool");
+        let query = "INSERT into documents (documentName, documentContent) VALUES (?, ?)";
+        let values = [documentName, documentContent];
+
+        //let query = "INSERT into documents (documentName) VALUES (?)";
+        //let values = [documentName];
+
+        connection.query(query, values, (err, data) => {
+            if(err) console.log("err", err);
+
+            console.log("documents", query);
+            res.json({message: "Dokument sparad"});
+        });
+    });
+});
+
+app.get('/documents/:documentID', (req, res) => {
+    let documentID = req.params.documentID;
+
+    connection.connect((err) => {
+        if (err) console.log("err", err);
+
+        let query = "SELECT * FROM documents";
+
+        connection.query(query, (err, data) => {
+            if (err) console.log("err", err);
+
+            res.json(data);
+        })
+
     })
+
+    
 })
 
 module.exports = app;

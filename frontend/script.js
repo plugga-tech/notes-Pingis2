@@ -7,8 +7,6 @@ let loginBtn = document.getElementById('loginBtn');
 let isLoggedIn = true;
 
 
-
-
 function toggleLoginState() {
     if (isLoggedIn) {
         loginBtn.innerHTML = "logga ut";
@@ -29,15 +27,13 @@ loginBtn.addEventListener('click', () => {
 
 
 createDocumentBtn.addEventListener('click', () => {
-    console.log("click");
-
     createDocument();
-    
 });
+
 
 printDocuments();
 
-
+/*
 export default function createIndex() {
     fetch("http://localhost:3000/documents")
     .then(res => res.json())
@@ -50,7 +46,7 @@ export default function createIndex() {
         console.error("error", error);
     })
 };
-
+*/
 
 /*
 export default async function createIndex() {

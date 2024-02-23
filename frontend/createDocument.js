@@ -1,39 +1,60 @@
-let createDocumentBtn = document.getElementById('createDocumentBtn');
-let writingDocument = document.getElementById('writingDocument');
+import printDocuments from "./printDocuments.js";
+import saveDocument from "./saveDocument.js";
 
-createDocumentBtn.addEventListener('click', () => {
-    console.log("click");
-});
 
 export default function createDocument() {
-    fetch("http://localhost:3000/new_document", {
+    fetch("http://localhost:3000/documents", {
         method: "GET"
     })
-    .then(res => res.text())
+    .then(res => res.json())
     .then(data => {
 
-
-        let newWindow = window.open('', 'new_document');
-
-        function writingDocument() {
-            let input = document.createElement('input');
-            input.setAttribute('class', 'textInput');
-            input.style.width = "100%";
-            input.style.height = "500px";
-            newWindow.document.body.appendChild(input);
-
-            let savedInputValue = localStorage.getItem('savedInputValue');
-            if (savedInputValue) {
-                input.value = savedInputValue;
-            }
-
-            input.addEventListener('input', function() {
-                localStorage.setItem
-            })
-        }
-        
         writingDocument();
+        
+    });
+};
+
+function writingDocument() {
+
+    document.body.innerHTML = "";
+    localStorage.removeItem('savedInputValue');
+    localStorage.removeItem('savedDocumentTitle');
+    
+
+    let title = document.createElement('h1');
+    title.textContent = "Välj ett namn på ditt dokument";
+    document.body.appendChild(title);
+
+    let docTitle = document.createElement('textarea');
+    docTitle.classList.add('docTitle');
+    document.body.appendChild(docTitle);
+
+    let textArea = document.createElement('textarea');
+    textArea.classList.add('textInput');
+    document.body.appendChild(textArea);
+
+    docTitle.addEventListener('input', function() {
+        localStorage.setItem('savedDocumentTitle', docTitle.value);
     })
+    
+    textArea.addEventListener('input', function() {
+        localStorage.setItem('savedInputValue', textArea.value);
+    })
+
+    let savedInputValue = localStorage.getItem('savedInputValue');
+    let savedDocumentTitle = localStorage.getItem('savedDocumentTitle');
+
+    if (savedInputValue) {
+        textArea.value = savedInputValue;
+    }
+
+    if (savedDocumentTitle) {
+        docTitle.value = savedDocumentTitle;
+    }
+
+    saveDocument();
+    
 }
 
-createDocument();
+
+
