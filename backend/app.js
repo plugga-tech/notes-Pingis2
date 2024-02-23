@@ -69,17 +69,15 @@ app.get('/documents/:documentID', (req, res) => {
     connection.connect((err) => {
         if (err) console.log("err", err);
 
-        let query = "SELECT * FROM documents";
+        let query = "SELECT documentID FROM documents WHERE id = ?";
+        let values = [documentID];
 
-        connection.query(query, (err, data) => {
+        connection.query(query, values, (err, data) => {
             if (err) console.log("err", err);
 
             res.json(data);
         })
-
     })
-
-    
 })
 
 module.exports = app;

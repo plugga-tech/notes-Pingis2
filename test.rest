@@ -4,3 +4,6 @@ GET http://localhost:3000/documents
 
 POST http://localhost:3000/documents
 
+###
+GET http://localhost:3000/documents/143
+
