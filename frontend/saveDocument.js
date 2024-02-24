@@ -3,17 +3,23 @@ import saveInput from "./createDocument.js";
 import printDocuments from "./printDocuments.js";
 
 
-let savedDoc = localStorage.getItem('savedDocumentTitle');
-let savedContent = localStorage.getItem('savedInputValue');
+
 
 export default function saveDocument() {
+
+    let savedTitle = document.querySelector('.docTitle').value;
+    let savedContent = document.querySelector('.textInput').value;
+    console.log(savedContent, savedTitle);
+
+    localStorage.setItem('savedInputValue', savedTitle);
+    localStorage.setItem('savedDocumentTitle', savedContent);
 
     fetch("http://localhost:3000/documents", {
         method: "POST",
         headers: {
             'Content-Type': 'application/json',
         },
-        body: JSON.stringify({docTitle: savedDoc, textArea: savedContent})
+        body: JSON.stringify({ savedTitle, savedContent })
         
     })
     .then(res => res.text())
@@ -40,8 +46,10 @@ function documentSaved() {
 
     document.body.innerHTML = "";
 
-    let savedInputValue = localStorage.getItem('savedInputValue');
-    let savedDocumentTitle = localStorage.getItem('savedDocumentTitle');
+    //let savedTitle = localStorage.getItem('savedInputValue');
+    //let savedContent = localStorage.getItem('savedDocumentTitle');
+    let savedTitle = document.querySelector('.docTitle');
+    let savedContent = document.querySelector('.textInput');
 
     let savedDocMessage = document.createElement('h1');
     savedDocMessage.textContent = "Ditt dokument är nu sparad!";

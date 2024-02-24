@@ -17,9 +17,12 @@ export default function createDocument() {
 function writingDocument() {
 
     document.body.innerHTML = "";
+
     localStorage.removeItem('savedInputValue');
     localStorage.removeItem('savedDocumentTitle');
-    
+
+    let savedTitle = document.querySelector('.docTitle');
+    let savedContent = document.querySelector('.textInput');
 
     let title = document.createElement('h1');
     title.textContent = "Välj ett namn på ditt dokument";
@@ -44,6 +47,7 @@ function writingDocument() {
     let savedInputValue = localStorage.getItem('savedInputValue');
     let savedDocumentTitle = localStorage.getItem('savedDocumentTitle');
 
+    /*
     if (savedInputValue) {
         textArea.value = savedInputValue;
     }
@@ -51,10 +55,11 @@ function writingDocument() {
     if (savedDocumentTitle) {
         docTitle.value = savedDocumentTitle;
     }
+    */
 
     saveDocument();
-    
 }
+
 
 
 
