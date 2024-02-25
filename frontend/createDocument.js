@@ -1,7 +1,6 @@
 import printDocuments from "./printDocuments.js";
 import saveDocument from "./saveDocument.js";
 
-
 export default function createDocument() {
     fetch("http://localhost:3000/documents", {
         method: "GET"

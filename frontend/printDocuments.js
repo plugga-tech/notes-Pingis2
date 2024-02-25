@@ -1,5 +1,7 @@
-import saveDocument from "./saveDocument.js";
+//import documentSaved from "./saveDocument.js";
 import deleteDocument from "./deleteDocument.js";
+//import saveDocument from "./saveDocument.js";
+//import editedDocumentSaved from "./saveDocument.js";
 
 let documentList = document.getElementById('documentList');
 
@@ -8,7 +10,7 @@ export default function printDocuments() {
     .then(res => res.json())
     .then(data => {
 
-        documentList.innerHTML = "";
+        documentList.innerHTML = "";        
 
         data.map(documents => {
 
@@ -44,7 +46,6 @@ export default function printDocuments() {
                         editDocument(documentName, documentContent);
                     })
 
-                    
                 };
 
                 openedDocument(documents.documentName, documents.documentContent);
@@ -64,27 +65,28 @@ export default function printDocuments() {
         }).forEach(element => {
             documentList.appendChild(element);
         })
+
     })
     
 }
 
-function editDocument(documentName, documentContent) {
+
+function editDocument(documentName, documentContent, documentID) {
 
     let docTitle = document.createElement('textarea');
     docTitle.classList.add('docTitle');
-    docTitle.textContent = documentName;
+    docTitle.value = documentName;
     document.body.appendChild(docTitle);
 
     let textArea = document.createElement('textarea');
     textArea.classList.add('textArea');
-    textArea.textContent = documentContent;
+    textArea.value = documentContent;
     document.body.appendChild(textArea);
 
-    
     let saveEditedDoc = document.createElement('button');
     saveEditedDoc.textContent = "spara dokument";
     document.body.appendChild(saveEditedDoc);
- 
+
     saveEditedDoc.addEventListener('click', () => {
         console.log("click");
 
@@ -103,15 +105,38 @@ function editDocument(documentName, documentContent) {
         })
         .then(response => response.json())
         .then(data => {
-            console.log("dokument updaterad", data);
-            saveDocument(editedDocumentTitle, editedDocumentContent);
+
+            document.body.innerHTML = "";
+    
+            let savedDocMessage = document.createElement('h1');
+            savedDocMessage.textContent = "Ditt dokument är nu sparad!";
+            document.body.appendChild(savedDocMessage);
+        
+            let makeNewDocButton = document.createElement('button');
+            makeNewDocButton.textContent = "Skapa ett nytt dokument";
+            makeNewDocButton.classList.add("newDocButton");
+            document.body.appendChild(makeNewDocButton);
+        
+            let backToStartButton = document.createElement('button');
+            backToStartButton.textContent = "Gå tillbaka till alla dokument";
+            document.body.appendChild(backToStartButton);
+
+            console.log("dokument updaterad", editedDocumentTitle, editedDocumentContent);
+        
+            makeNewDocButton.addEventListener('click', () => {
+                createDocument();
+            });
+        
+            backToStartButton.addEventListener('click', () => {
+                window.location.href = 'index.html';
+                
+            });
+            
+        })
+        .catch(error => {
+            console.error('fetch error', error);
         })
 
     })
-
     
-
 }
-
-
-

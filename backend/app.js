@@ -62,16 +62,14 @@ app.post('/savedDocuments', (req, res) => {
         connection.query(query, values, (err, data) => {
             if(err) console.log("err", err);
 
-            console.log("documents", query, values);
+            console.log("documents", query);
             res.json({message: "Dokument sparad"});
-
-            console.log(values);
-            console.log(query);
         });
     });
 });
 
 app.put('/editedDocument', (req, res) => {
+
     let documentName = req.body.docTitle;
     let documentContent = req.body.textArea;
     console.log(documentName, documentContent);
@@ -80,12 +78,10 @@ app.put('/editedDocument', (req, res) => {
     connection.connect((err) => {
         if (err) console.log("err", err);
 
-        let query = "UPDATE documents SET (documentName, documentContent) WHERE (documentName, documentContent)";
-        let values = [documentName, documentContent];
-        
-        console.log(req.body);
-        console.log(documentName, documentContent);
-        
+        //let query = "UPDATE documents SET (documentName, documentContent) WHERE (documentName, documentContent)";
+        let query = "UPDATE documents SET documentContent = ? WHERE documentName = ?";
+        let values = [documentContent, documentName];
+        console.log(values);
 
         //let query = "INSERT into documents (documentName) VALUES (?)";
         //let values = [documentName];
@@ -93,7 +89,7 @@ app.put('/editedDocument', (req, res) => {
         connection.query(query, values, (err, data) => {
             if(err) console.log("err", err);
 
-            console.log("documents", query, values);
+            console.log("documents", query);
             res.json({message: "Dokument sparad"});
         });
     });

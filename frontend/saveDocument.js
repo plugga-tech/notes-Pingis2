@@ -1,24 +1,10 @@
 import createDocument from "./createDocument.js";
-import saveInput from "./createDocument.js";
 import printDocuments from "./printDocuments.js";
-
-
-
 
 export default function saveDocument() {
 
-    //let savedTitle = document.getElementById('docTitle').value;
-    //let savedContent = document.getElementById('textArea').value;
-
     let savedTitle = document.querySelector('.docTitle').value;
     let savedContent = document.querySelector('.textArea').value;
-
-    //let savedTitle = document.querySelector('.docTitle').value;
-    //let savedContent = document.querySelector('.textArea').value;
-    console.log(savedContent, savedTitle);
-
-    //let titleValue = savedTitle.value;
-    //let contentValue = savedContent.value;
 
     /*
     localStorage.setItem('savedInputValue', titleValue);
@@ -47,10 +33,6 @@ export default function saveDocument() {
 
 
 function documentSaved() {
-    
-    
-    //let savedTitle = localStorage.getItem('savedInputValue');
-    //let savedContent = localStorage.getItem('savedDocumentTitle');
 
     
     let savedTitle = document.querySelector('.docTitle').value;
@@ -77,34 +59,9 @@ function documentSaved() {
     });
 
     backToStartButton.addEventListener('click', () => {
-        printDocuments();
         window.location.href = 'index.html';
         
     });
 
-    console.log(savedTitle.value, savedContent.value);
 }
 
-
-
-/*
-export default saveDocumentBtn.addEventListener('click', () => {
-    console.log('click');
-
-    let saveDoc = {
-        documents: savedDoc
-    }
-
-    fetch("http://localhost:3000/documents", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify(saveDoc)
-    })
-    .then(res => res.json())
-    .then(data => {
-        console.log("spara dokument", data);
-    })
-})
-*/
