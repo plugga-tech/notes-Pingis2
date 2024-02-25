@@ -7,49 +7,56 @@ import printDocuments from "./printDocuments.js";
 
 export default function saveDocument() {
 
+    //let savedTitle = document.getElementById('docTitle').value;
+    //let savedContent = document.getElementById('textArea').value;
+
     let savedTitle = document.querySelector('.docTitle').value;
-    let savedContent = document.querySelector('.textInput').value;
+    let savedContent = document.querySelector('.textArea').value;
+
+    //let savedTitle = document.querySelector('.docTitle').value;
+    //let savedContent = document.querySelector('.textArea').value;
     console.log(savedContent, savedTitle);
 
-    localStorage.setItem('savedInputValue', savedTitle);
-    localStorage.setItem('savedDocumentTitle', savedContent);
+    //let titleValue = savedTitle.value;
+    //let contentValue = savedContent.value;
 
-    fetch("http://localhost:3000/documents", {
+    /*
+    localStorage.setItem('savedInputValue', titleValue);
+    localStorage.setItem('savedDocumentTitle', contentValue);
+    console.log(titleValue, contentValue);
+    */
+    fetch("http://localhost:3000/savedDocuments", {
         method: "POST",
         headers: {
             'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ savedTitle, savedContent })
+        body: JSON.stringify({ docTitle: savedTitle, textArea: savedContent })
         
     })
-    .then(res => res.text())
+    .then(res => res.json()) 
     .then(data => {
-
+        console.log("sparad", data);
+        documentSaved();
         
-        let saveDocumentBtn = document.createElement('button');
-        saveDocumentBtn.textContent = "spara dokument";
-        document.body.appendChild(saveDocumentBtn);
-
-        saveDocumentBtn.addEventListener('click', () => {
-            console.log("dokument sparad");
-            
-            documentSaved();
-        });
-        
-
-    });
+    })
+    .catch(error => {
+        console.error("error under fetch", error);
+    }) 
 };
 
 
 
 function documentSaved() {
-
-    document.body.innerHTML = "";
-
+    
+    
     //let savedTitle = localStorage.getItem('savedInputValue');
     //let savedContent = localStorage.getItem('savedDocumentTitle');
-    let savedTitle = document.querySelector('.docTitle');
-    let savedContent = document.querySelector('.textInput');
+
+    
+    let savedTitle = document.querySelector('.docTitle').value;
+    let savedContent = document.querySelector('.textArea').value;
+    
+    document.body.innerHTML = "";
 
     let savedDocMessage = document.createElement('h1');
     savedDocMessage.textContent = "Ditt dokument är nu sparad!";
@@ -75,7 +82,7 @@ function documentSaved() {
         
     });
 
-
+    console.log(savedTitle.value, savedContent.value);
 }
 
 

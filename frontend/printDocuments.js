@@ -1,4 +1,5 @@
 import saveDocument from "./saveDocument.js";
+import deleteDocument from "./deleteDocument.js";
 
 let documentList = document.getElementById('documentList');
 
@@ -7,7 +8,6 @@ export default function printDocuments() {
     .then(res => res.json())
     .then(data => {
 
-        console.log(data);
         documentList.innerHTML = "";
 
         data.map(documents => {
@@ -19,10 +19,6 @@ export default function printDocuments() {
             let openButton = document.createElement("button");
             openButton.innerText = "Öppna dokument";
             div.appendChild(openButton);
-
-            let deleteButton = document.createElement("button");
-            deleteButton.innerText = "Ta bort dokument";
-            div.appendChild(deleteButton);
 
             openButton.addEventListener('click', () => {
                 console.log("click");
@@ -54,6 +50,14 @@ export default function printDocuments() {
                 openedDocument(documents.documentName, documents.documentContent);
 
             });
+
+            let deleteButton = document.createElement("button");
+            deleteButton.innerText = "Ta bort dokument";
+            div.appendChild(deleteButton);
+
+            deleteButton.addEventListener('click', () => {
+                deleteDocument(documents.documentID);
+            })
             
             return div;
             
@@ -72,7 +76,7 @@ function editDocument(documentName, documentContent) {
     document.body.appendChild(docTitle);
 
     let textArea = document.createElement('textarea');
-    textArea.classList.add('textInput');
+    textArea.classList.add('textArea');
     textArea.textContent = documentContent;
     document.body.appendChild(textArea);
 
@@ -87,19 +91,20 @@ function editDocument(documentName, documentContent) {
         const editedDocumentTitle = docTitle.value;
         const editedDocumentContent = textArea.value;
 
-        fetch('http://localhost:3000/documents', {
-            method: "POST",
+        fetch('http://localhost:3000/editedDocument', {
+            method: "PUT",
             headers: {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-                documentName: editedDocumentTitle,
-                documentContent: editedDocumentContent,
+                docTitle: editedDocumentTitle,
+                textArea: editedDocumentContent,
             })
         })
         .then(response => response.json())
         .then(data => {
             console.log("dokument updaterad", data);
+            saveDocument(editedDocumentTitle, editedDocumentContent);
         })
 
     })

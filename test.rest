@@ -2,8 +2,6 @@ GET http://localhost:3000/documents
 
 ###
 
-POST http://localhost:3000/documents
+POST http://localhost:3000/savedDocuments
 
-###
-GET http://localhost:3000/documents/143
 

@@ -39,10 +39,10 @@ app.get("/documents", (req, res) => {
 })
 
 
-app.post('/documents', (req, res) => {
+app.post('/savedDocuments', (req, res) => {
 
-    let documentName = req.body.savedTitle;
-    let documentContent = req.body.savedContent;
+    let documentName = req.body.docTitle;
+    let documentContent = req.body.textArea;
     console.log(documentName, documentContent);
     //let documentContent = req.body.docContent;
 
@@ -51,6 +51,7 @@ app.post('/documents', (req, res) => {
 
         let query = "INSERT into documents (documentName, documentContent) VALUES (?, ?)";
         let values = [documentName, documentContent];
+        
 
         console.log(documentName, documentContent);
         
@@ -61,12 +62,61 @@ app.post('/documents', (req, res) => {
         connection.query(query, values, (err, data) => {
             if(err) console.log("err", err);
 
-            console.log("documents", query);
+            console.log("documents", query, values);
             res.json({message: "Dokument sparad"});
 
             console.log(values);
+            console.log(query);
         });
     });
 });
+
+app.put('/editedDocument', (req, res) => {
+    let documentName = req.body.docTitle;
+    let documentContent = req.body.textArea;
+    console.log(documentName, documentContent);
+    //let documentContent = req.body.docContent;
+
+    connection.connect((err) => {
+        if (err) console.log("err", err);
+
+        let query = "UPDATE documents SET (documentName, documentContent) WHERE (documentName, documentContent)";
+        let values = [documentName, documentContent];
+        
+        console.log(req.body);
+        console.log(documentName, documentContent);
+        
+
+        //let query = "INSERT into documents (documentName) VALUES (?)";
+        //let values = [documentName];
+
+        connection.query(query, values, (err, data) => {
+            if(err) console.log("err", err);
+
+            console.log("documents", query, values);
+            res.json({message: "Dokument sparad"});
+        });
+    });
+});
+
+app.delete("/documents/:documentID", (req, res) => {
+
+    let documentID = req.params.documentID;
+
+    connection.connect((err) => {
+        if (err) console.log("err", err);
+
+        let query = "DELETE FROM documents WHERE documentID = ?";
+        let values = [documentID];
+
+        connection.query(query, values, (err, data) => {
+            if (err) console.log("err", err);
+
+            console.log("documents", data);
+            res.json({message: "dokument raderad"});
+        });
+    });
+});
+
 
 module.exports = app;
