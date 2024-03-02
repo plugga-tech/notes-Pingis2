@@ -25,7 +25,7 @@ export default function printDocuments() {
             openButton.addEventListener('click', () => {
                 console.log("click");
 
-                function openedDocument(documentName, documentContent) {
+                function openedDocument(documentName, documentContent, documentID) {
                     document.body.innerHTML = "";
                 
                     let title = document.createElement('h1');
@@ -43,12 +43,12 @@ export default function printDocuments() {
                     editButton.addEventListener('click', () => {
                         document.body.innerHTML = "";
 
-                        editDocument(documentName, documentContent);
+                        editDocument(documentName, documentContent, documentID);
                     })
 
                 };
 
-                openedDocument(documents.documentName, documents.documentContent);
+                openedDocument(documents.documentName, documents.documentContent, documents.documentID);
 
             });
 
@@ -93,7 +93,7 @@ function editDocument(documentName, documentContent, documentID) {
         const editedDocumentTitle = docTitle.value;
         const editedDocumentContent = textArea.value;
 
-        fetch('http://localhost:3000/editedDocument', {
+        fetch(`http://localhost:3000/editedDocument/${documentID}`, {
             method: "PUT",
             headers: {
                 'Content-Type': 'application/json',
@@ -106,6 +106,7 @@ function editDocument(documentName, documentContent, documentID) {
         .then(response => response.json())
         .then(data => {
 
+            console.log(editedDocumentContent, editedDocumentTitle);
             document.body.innerHTML = "";
     
             let savedDocMessage = document.createElement('h1');
